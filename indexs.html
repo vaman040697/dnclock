@@ -49,6 +49,10 @@
            var time = new Date().getHours();
            const m = 0.5;
            const de = 0.17;
+            let lat;
+           let lng;
+           var user_loc = navigator.geolocation;
+        
 var body = document.getElementsByTagName("BODY")[0];
 var rays = document.getElementsByClassName("ray");
 
@@ -69,8 +73,24 @@ setInterval(() =>{
     min.style.transform = `rotateZ(${mm}deg)`;
     sec.style.transform = `rotateZ(${ss}deg)`;     
 });
+        
+        function geolocator() {
+            if(user_loc) {
+                user_loc.getCurrentPosition(success);
+            } else {
+                "Your browser doesn't support geolocation API";
+            }
+        }
+geolocator();
 
-tHolder = suntimes(28.679079, 77.216721);
+        function success(data) {
+            lat = data.coords.latitude;
+            lng = data.coords.longitude;
+        }
+
+ success(); // function to store values to lat and long
+
+tHolder = suntimes(lat, lng);
 
 rise = tHolder[0];
 set = tHolder[1];
